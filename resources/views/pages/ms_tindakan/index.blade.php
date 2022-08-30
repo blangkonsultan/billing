@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Master Pasien') }}
+            {{ __('Master Tindakan') }}
         </h2>
     </x-slot>
 
@@ -15,9 +15,9 @@
                     </div>
                 @endif
                     <div class="flex">
-                        <a class="" href="{{ route('pasien.create') }}"><button
+                        <a class="" href="{{ route('ms_tindakan.create') }}"><button
                                 class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">TAMBAH
-                                PASIEN</button>
+                                TINDAKAN</button>
                         </a>
                     </div>
                     <br>
@@ -29,32 +29,24 @@
                                         NO
                                     </th>
                                     <th scope="col" class="py-3 px-6">
-                                        NO RM
-                                    </th>
-                                    <th scope="col" class="py-3 px-6">
                                         NAMA
                                     </th>
                                     <th scope="col" class="py-3 px-6">
-                                        TANGGAL LAHIR
-                                    </th>
-                                    <th scope="col" class="py-3 px-6">
-                                        JENIS KELAMIN
+                                        HARGA
                                     </th>
                                     <th scope="col" class="py-3 px-6">
                                         AKSI
                                     </th>
                                 </tr>
                             <tbody>
-                                @foreach ($pasien as $key => $p)
+                                @foreach ($ms_tindakan as $key => $mt)
                                     <tr class="bg-white ">
                                         <td class="py-4 px-6">{{ $key + 1 }}</td>
-                                        <td class="py-4 px-6">{{ $p->id }}</td>
-                                        <td class="py-4 px-6">{{ $p->nama }}</td>
-                                        <td class="py-4 px-6">{{ date('d-m-Y', strtotime($p->tgl_lahir)) }}</td>
-                                        <td class="py-4 px-6">{{ $p->jenis_kelamin == '1' ? 'Pria' : 'Wanita' }}</td>
+                                        <td class="py-4 px-6">{{ $mt->nama }}</td>
+                                        <td class="py-4 px-6">{{ $mt->harga }}</td>
                                         <td>
                                             <div class="m-3">
-                                                <a href="{{ route('pasien.edit', $p->id) }}"><button type="button"
+                                                <a href="{{ route('ms_tindakan.edit', $mt->id) }}"><button type="button"
                                                         class="py-2 px-3 text-xs font-medium text-center text-white
                                         bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Edit</button>
                                                 </a>

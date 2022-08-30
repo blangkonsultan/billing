@@ -5,19 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pasien extends Model
+class Unit extends Model
 {
-    protected $table = 'ms_pasien';
+    protected $table = 'ms_unit';
     use HasFactory;
     public $timestamps = false;
     protected $fillable = [
-        'nama', 'tgl_lahir', 'jenis_kelamin', 'alamat'
+        'nama'
 
     ];
-
-    protected $casts = [
-        'tgl_lahir' => 'date',
-    ];
-
 
 }
