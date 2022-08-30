@@ -46,12 +46,16 @@ class KunjunganController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = Validator::make($request->all(), [
+        // dd($request);
+
+        $formrequest = $request->merge([
+            'tgl_mulai'=> date('Y-m-d')
+        ])->all();
+        $validate = Validator::make($formrequest, [
             'pasien_id' => 'required|exists:ms_pasien,id',
             'layanan_id' => 'required|exists:ms_layanan,id',
             'penjamin_id' => 'required|exists:ms_penjamin,id',
             'tgl_mulai' => 'required|date',
-            'tgl_selesai' => 'date',
         ])->validate();
 
         Kunjungan::create($validate);
@@ -80,7 +84,13 @@ class KunjunganController extends Controller
      */
     public function edit(Kunjungan $kunjungan)
     {
-        //
+        // dd($kunjungan);
+        return view('pages.kunjungan.edit', [
+            'pasien' => Pasien::get(),
+            'layanan' => Layanan::get(),
+            'penjamin' => Penjamin::get(),
+            'kunjungan' => $kunjungan,
+        ]);
     }
 
     /**
@@ -102,6 +112,11 @@ class KunjunganController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Kunjungan $kunjungan)
+    {
+        //
+    }
+
+    public function cetak(Kunjungan $kunjungan)
     {
         //
     }

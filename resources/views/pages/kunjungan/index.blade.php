@@ -54,8 +54,8 @@
                                 @foreach ($kunjungan as $key => $k)
                                     <tr class="bg-white ">
                                         <td class="py-4 px-6">{{ $key + 1 }}</td>
-                                        <td class="py-4 px-6">{{ $k->tgl_mulai}}</td>
-                                        <td class="py-4 px-6">{{ $k->tgl_selesai}}</td>
+                                        <td class="py-4 px-6">{{ date('d-m-Y', strtotime($k->tgl_mulai)) }}</td>
+                                        <td class="py-4 px-6">{{ date('d-m-Y', strtotime($k->tgl_selesai)) }}</td>
                                         <td class="py-4 px-6">{{ $k->layanan->nama}}</td>
                                         <td class="py-4 px-6">{{ $k->penjamin->nama}}</td>
                                         <td class="py-4 px-6">{{ $k->pasien->id}}</td>

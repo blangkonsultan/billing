@@ -134,6 +134,8 @@ Route::middleware(['auth'])->group(function () {
             ->name('update');
         Route::delete('/kunjungan/{kunjungan}', [\App\Http\Controllers\KunjunganController::class, 'destroy'])
             ->name('destroy');
+        Route::get('/kunjungan/cetak/{kunjungan}', [\App\Http\Controllers\KunjunganController::class, 'cetak'])
+            ->name('cetak');
     });
 });
 
