@@ -17,7 +17,8 @@ class PasienController extends Controller
     public function index()
     {
         return view('pages.pasien.index', [
-            'pasien' => Pasien::orderBy('id')->get()
+            'pasien' => Pasien::orderBy('id')->get(),
+
         ]);
     }
 
@@ -40,7 +41,7 @@ class PasienController extends Controller
     public function store(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'nama' => 'required',
+            'nama' => 'required|string',
             'tgl_lahir' => 'required|date',
             'jenis_kelamin' => 'required|int',
             'alamat' => 'required|string',
@@ -52,6 +53,19 @@ class PasienController extends Controller
             ->with('Success', 'Berhasil Input Pasien');
     }
 
+    public function cari(Request $request)
+	{
+		// menangkap data pencarian
+		$cari = $request->cari;
+
+    		// mengambil data dari table pegawai sesuai pencarian data
+		$pasien = Pasien::where('nama','like',"%".$cari."%")
+		->paginate();
+
+    		// mengirim data pegawai ke view index
+		return view('index',['pasien' => $pasien]);
+
+	}
     /**
      * Display the specified resource.
      *
@@ -104,8 +118,11 @@ class PasienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Pasien $pasien)
     {
-        //
+        $pasien->delete();
+        return redirect()
+        ->route('pasien.index')
+        ->with('Success', 'Berhasil Menghapus Data Pasien');
     }
 }

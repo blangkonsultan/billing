@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Kelas;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +19,7 @@ class KelasSeeder extends Seeder
 
         foreach ($array as $a) {
 
-            DB::table('ms_kelas')->insert($a);
+           Kelas::create($a);
         }
     }
 }

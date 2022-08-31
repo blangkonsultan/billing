@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Unit;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +19,7 @@ class UnitSeeder extends Seeder
 
         foreach ($array as $a) {
 
-            DB::table('ms_unit')->insert($a);
+            Unit::create($a);
         }
     }
 }

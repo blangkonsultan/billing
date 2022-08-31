@@ -19,6 +19,8 @@ Route::middleware(['auth'])->group(function () {
     Route::name(('pasien.'))->group(function () {
         Route::get('/pasien', [\App\Http\Controllers\PasienController::class, 'index'])
             ->name('index');
+        Route::get('/pasien/{cari}', [\App\Http\Controllers\PasienController::class, 'cari'])
+            ->name('cari');
         Route::get('/pasien/create', [\App\Http\Controllers\PasienController::class, 'create'])
             ->name('create');
         Route::post('/pasien/store', [\App\Http\Controllers\PasienController::class, 'store'])
@@ -33,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::name(('dokter.'))->group(function () {
         Route::get('/dokter', [\App\Http\Controllers\DokterController::class, 'index'])
-        ->name('index');
+            ->name('index');
         Route::get('/dokter/create', [\App\Http\Controllers\DokterController::class, 'create'])
             ->name('create');
         Route::post('/dokter/store', [\App\Http\Controllers\DokterController::class, 'store'])
@@ -48,7 +50,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::name(('ms_tindakan.'))->group(function () {
         Route::get('/ms_tindakan', [\App\Http\Controllers\Ms_TindakanController::class, 'index'])
-        ->name('index');
+            ->name('index');
         Route::get('/ms_tindakan/create', [\App\Http\Controllers\Ms_TindakanController::class, 'create'])
             ->name('create');
         Route::post('/ms_tindakan/store', [\App\Http\Controllers\Ms_TindakanController::class, 'store'])
@@ -63,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::name(('layanan.'))->group(function () {
         Route::get('/layanan', [\App\Http\Controllers\LayananController::class, 'index'])
-        ->name('index');
+            ->name('index');
         Route::get('/layanan/create', [\App\Http\Controllers\LayananController::class, 'create'])
             ->name('create');
         Route::post('/layanan/store', [\App\Http\Controllers\LayananController::class, 'store'])
@@ -78,7 +80,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::name(('penjamin.'))->group(function () {
         Route::get('/penjamin', [\App\Http\Controllers\PenjaminController::class, 'index'])
-        ->name('index');
+            ->name('index');
         Route::get('/penjamin/create', [\App\Http\Controllers\PenjaminController::class, 'create'])
             ->name('create');
         Route::post('/penjamin/store', [\App\Http\Controllers\PenjaminController::class, 'store'])
@@ -93,7 +95,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::name(('unit.'))->group(function () {
         Route::get('/unit', [\App\Http\Controllers\UnitController::class, 'index'])
-        ->name('index');
+            ->name('index');
         Route::get('/unit/create', [\App\Http\Controllers\UnitController::class, 'create'])
             ->name('create');
         Route::post('/unit/store', [\App\Http\Controllers\UnitController::class, 'store'])
@@ -108,7 +110,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::name(('kelas.'))->group(function () {
         Route::get('/kelas', [\App\Http\Controllers\KelasController::class, 'index'])
-        ->name('index');
+            ->name('index');
         Route::get('/kelas/create', [\App\Http\Controllers\KelasController::class, 'create'])
             ->name('create');
         Route::post('/kelas/store', [\App\Http\Controllers\KelasController::class, 'store'])
@@ -123,7 +125,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::name(('kunjungan.'))->group(function () {
         Route::get('/kunjungan', [\App\Http\Controllers\KunjunganController::class, 'index'])
-        ->name('index');
+            ->name('index');
         Route::get('/kunjungan/create', [\App\Http\Controllers\KunjunganController::class, 'create'])
             ->name('create');
         Route::post('/kunjungan/store', [\App\Http\Controllers\KunjunganController::class, 'store'])
@@ -137,6 +139,29 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/kunjungan/cetak/{kunjungan}', [\App\Http\Controllers\KunjunganController::class, 'cetak'])
             ->name('cetak');
     });
+
+    Route::name(('pelayanan.'))->group(function () {
+        Route::get('/pelayanan', [\App\Http\Controllers\PelayananController::class, 'index'])
+            ->name('index');
+        Route::get('/pelayanan/create', [\App\Http\Controllers\PelayananController::class, 'create'])
+            ->name('create');
+        Route::post('/pelayanan/store', [\App\Http\Controllers\PelayananController::class, 'store'])
+            ->name('store');
+        Route::get('/pelayanan/{pelayanan}', [\App\Http\Controllers\PelayananController::class, 'edit'])
+            ->name('edit');
+        Route::put('/pelayanan/{pelayanan}', [\App\Http\Controllers\PelayananController::class, 'update'])
+            ->name('update');
+        Route::delete('/pelayanan/{pelayanan}', [\App\Http\Controllers\PelayananController::class, 'destroy'])
+            ->name('destroy');
+        Route::get('/pelayanan/show/{pelayanan}', [\App\Http\Controllers\PelayananController::class, 'show'])
+            ->name('show');
+    });
+});
+Route::name('student.')->group(function () {
+    Route::get('/student', [\App\Http\Controllers\StudentController::class, 'index'])
+        ->name('index');
+    Route::post('/student/store', [\App\Http\Controllers\StudentController::class, 'store'])
+        ->name('store');
 });
 
 Route::get('/', function () {

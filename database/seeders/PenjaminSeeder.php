@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Penjamin;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +19,7 @@ class PenjaminSeeder extends Seeder
 
         foreach ($array as $a) {
 
-            DB::table('ms_penjamin')->insert($a);
+            Penjamin::create($a);
         }
     }
 }

@@ -16,6 +16,7 @@ class CreateMsDokterTable extends Migration
             $table->id();
             $table->string('nip')->unique();
             $table->string('nama');
+            $table->timestamps();
         });
     }
 

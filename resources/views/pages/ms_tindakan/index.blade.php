@@ -51,6 +51,15 @@
                                         bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Edit</button>
                                                 </a>
                                             </div>
+                                            <div class="m-3">
+                                                <form action="{{ route('ms_tindakan.destroy', $mt->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit"
+                                                        class="py-2 px-3 text-xs font-medium text-center text-white
+                                                 bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300">Delete</button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

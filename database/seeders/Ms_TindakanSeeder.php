@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Ms_Tindakan;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -19,7 +20,7 @@ class Ms_TindakanSeeder extends Seeder
 
         foreach($array as $a){
 
-        DB::table('ms_tindakan')->insert($a);
+        Ms_Tindakan::create($a);
 
         }
 

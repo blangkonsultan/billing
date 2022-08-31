@@ -24,7 +24,8 @@
                                 <option value="">Pilih Pasien</option>
                                 @foreach ($pasien as $p)
                                     <option value="{{ $p->id }}"
-                                        {{ old('pasien_id') == $p->id ? 'selected' : '' }}>{{ $p->id }} - {{ $p->nama }}</option>
+                                        {{ old('pasien_id') == $p->id ? 'selected' : '' }}>{{ $p->id }} -
+                                        {{ $p->nama }}</option>
                                 @endforeach
                             </select>
                             @if ($errors->first('pasien_id'))
@@ -54,13 +55,50 @@
                                 <option value="">Pilih Penjamin</option>
                                 @foreach ($penjamin as $pj)
                                     <option value="{{ $pj->id }}"
-                                        {{ old('penjamin_id') == $pj->id ? 'selected' : '' }}>{{ $pj->nama }}</option>
+                                        {{ old('penjamin_id') == $pj->id ? 'selected' : '' }}>{{ $pj->nama }}
+                                    </option>
                                 @endforeach
                             </select>
                             @if ($errors->first('penjamin_id'))
                                 <small class="text-red-700 font-semi-bold">{{ $errors->first('penjamin_id') }}</small>
                             @endif
                         </div>
+                        <div class="mb-6">
+                            <button type="button" name="add" id="dynamic-ar"
+                                class="btn btn-outline-primary">Tambah
+                                Layanan</button>
+                        </div>
+                        <table class="table table-bordered " >
+                            <tbody id="dynamicAddRemove">
+                                <tr>
+                                <td vol>
+                                    <div class="mb-6">
+                                        <label for="countries"
+                                            class="block mb-2 text-sm font-medium text-black-900 dark:text-black-400">UNIT</label>
+                                        <select name="addMore[0][unit_id]"
+                                            class="bg-gray-50 border border-gray-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                            <option value="">Pilih Unit</option>
+                                            @foreach ($unit as $u)
+                                                <option value="{{ $u->id }}"
+                                                    {{ old('addMore[0][unit_id]') == $u->id ? 'selected' : '' }}>
+                                                    {{ $u->nama }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->first('addMore[0][unit_id]'))
+                                            <small
+                                                class="text-red-700 font-semi-bold">{{ $errors->first('addMore[0][unit_id]') }}</small>
+                                        @endif
+                                    </div>
+                                </td>
+                                    <td>
+                                        <div class="mb-6">
+                                            <button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>
+                                        </div>
+                                    </td>
+                            </tr>
+                            </tbody>
+                        </table>
                         <button type="submit"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">SIMPAN</button>
                     </form>
@@ -70,4 +108,44 @@
             </div>
         </div>
     </div>
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+        var i = 0;
+        $("#dynamic-ar").click(function() {
+            ++i;
+            $("#dynamicAddRemove").append(
+                            '<tr>'+
+                                '<td vol>'+
+                                    '<div class="mb-6">'+
+                                        '<label for="countries"'+
+                                            'class="block mb-2 text-sm font-medium text-black-900 dark:text-black-400">UNIT</label>'+
+                                        '<select name="addMore['+i+'][unit_id]"'+
+                                            'class="bg-gray-50 border border-gray-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">'+
+                                            '<option value="">Pilih Unit</option>'+
+                                            '@foreach ($unit as $u)'+
+                                                '<option value="{{ $u->id }}"'+
+                                                   '{{ old("addMore['+i+'][unit_id]") == $u->id ? "selected" : "" }}>'+
+                                                    '{{ $u->nama }}'+
+                                                '</option>'+
+                                            '@endforeach'+
+                                        '</select>'+
+                                        '@if ($errors->first("addMore['+i+'][unit_id]"))'+
+                                            '<small'+
+                                               ' class="text-red-700 font-semi-bold">{{ $errors->firt("addMore['+i+'][unit_id]") }}</small>'+
+                                        '@endif'+
+                                    '</div>'+
+                                '<td>'+
+                                    '<div class="mb-6">'+
+                                        '<button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>'+
+                                    '</div>'+
+                                '</td>'+
+                            '</tr>');
+        });
+        $(document).on('click', '.remove-input-field', function() {
+            $(this).parents('tr').remove();
+            // document.getElementById("mboh"+i).remove();
+        });
+    </script>
 </x-app-layout>

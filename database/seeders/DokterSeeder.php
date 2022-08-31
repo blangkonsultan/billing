@@ -21,7 +21,7 @@ class DokterSeeder extends Seeder
         $array = [['nip' => '19920116.001', 'nama' => 'Buff'], ['nip' => '19950126.002',  'nama' => 'Kader']];
 
         foreach ($array as $a) {
-            DB::table('ms_dokter')->insert($a);
+            Dokter::create($a);
         }
     }
 }

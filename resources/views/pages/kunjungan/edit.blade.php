@@ -62,6 +62,46 @@
                                 <small class="text-red-700 font-semi-bold">{{ $errors->first('penjamin_id') }}</small>
                             @endif
                         </div>
+                        <div class="mb-6">
+                            <button type="button" name="add" id="dynamic-ar"
+                                class="btn btn-outline-primary">Tambah
+                                Layanan</button>
+                        </div>
+                        <table class="table table-bordered " >
+                            <tbody id="dynamicAddRemove">
+                                @foreach ($pelayanan as $key => $p)
+                                <tr>
+                                    {{-- {{ dd($p->unit_id) }} --}}
+                                    <td vol>
+                                        <div class="mb-6">
+                                            <label for="countries"
+                                                class="block mb-2 text-sm font-medium text-black-900 dark:text-black-400">UNIT</label>
+                                            <select name="addMore[{{ $key }}][unit_id]"
+                                                class="bg-gray-50 border border-gray-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                                <option value="">Pilih Unit</option>
+                                                @foreach ($pelayanan as $p)
+                                                    <option value="{{ $p->unit->id }}"
+                                                        {{ $p->unit->id == $p->unit_id ? 'selected' : '' }}>
+                                                         {{ $p->unit_id }}-{{ $p->unit->id }}-{{ $p->unit->nama }}
+                                                    </option>
+                                                @endforeach
+
+                                            </select>
+                                            @if ($errors->first('addMore[{{ $key }}][unit_id]'))
+                                                <small
+                                                    class="text-red-700 font-semi-bold">{{ $errors->first('addMore['.$key.'][unit_id]') }}</small>
+                                            @endif
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="mb-6">
+                                            <button type="button" onclick="hapusPelayanan($p->id)" class="btn btn-outline-danger remove-input-field">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                         <button type="submit"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">SIMPAN</button>
                     </form>
@@ -71,4 +111,60 @@
             </div>
         </div>
     </div>
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+        var i = 0;
+        $("#dynamic-ar").click(function() {
+            ++i;
+            $("#dynamicAddRemove").append(
+                            '<tr>'+
+                                '<td vol>'+
+                                    '<div class="mb-6">'+
+                                        '<label for="countries"'+
+                                            'class="block mb-2 text-sm font-medium text-black-900 dark:text-black-400">UNIT</label>'+
+                                        '<select name="addMore['+i+'][unit_id]"'+
+                                            'class="bg-gray-50 border border-gray-300 text-black-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">'+
+                                            '<option value="">Pilih Unit</option>'+
+                                            '@foreach ($pelayanan as $p)'+
+                                                    '<option value="{{ $p->unit->id }}"'+
+                                                        '{{ $p->unit_id == $p->unit->id ? "selected" : '' }}>'+
+                                                        '{{ $p->unit->nama }}'+
+                                                    '</option>'+
+                                                '@endforeach'+
+                                        '</select>'+
+                                        '@if ($errors->first("addMore['+i+'][unit_id]"))'+
+                                            '<small'+
+                                               ' class="text-red-700 font-semi-bold">{{ $errors->firt("addMore['+i+'][unit_id]") }}</small>'+
+                                        '@endif'+
+                                    '</div>'+
+                                '<td>'+
+                                    '<div class="mb-6">'+
+                                        '<button type="button" onclick="delete($p->id)" class="btn btn-outline-danger remove-input-field">Delete</button>'+
+                                    '</div>'+
+                                '</td>'+
+                            '</tr>');
+        });
+        $(document).on('click', '.remove-input-field', function() {
+            $(this).parents('tr').remove();
+        });
+    </script>
+    <script>
+        function hapusPelayanan(idP){
+                let id = $('#my_id').val();
+                $.ajax({
+                    type: 'delete',
+                    url: "{{route('pelayanan.destroy',"+idP+")}}",
+                    data: {
+                        _token: '{{csrf_token()}}',
+                    },
+                    success: function () {
+                    alert('Successfully Deleted');
+                    }
+                 }).fail(function(){
+                console.log('problem with route = digitizing/delete');
+                });
+        }
+    </script>
 </x-app-layout>

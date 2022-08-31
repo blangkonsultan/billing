@@ -10,7 +10,6 @@ class Dokter extends Model
     use HasFactory;
 
     protected $table = 'ms_dokter';
-    public $timestamps = false;
     protected $fillable = [
         'nip', 'nama'
     ];

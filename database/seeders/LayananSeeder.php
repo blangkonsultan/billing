@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Layanan;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +19,7 @@ class LayananSeeder extends Seeder
 
         foreach ($array as $a) {
 
-            DB::table('ms_layanan')->insert($a);
+            Layanan::create($a);
         }
     }
 }

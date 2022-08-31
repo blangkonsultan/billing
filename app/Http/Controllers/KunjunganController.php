@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Kunjungan;
 use App\Models\Layanan;
 use App\Models\Pasien;
+use App\Models\Pelayanan;
 use App\Models\Penjamin;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -32,9 +34,10 @@ class KunjunganController extends Controller
     public function create()
     {
         return view('pages.kunjungan.create', [
-           'pasien' => Pasien::get(),
-           'penjamin' => Penjamin::get(),
-           'layanan' => Layanan::get(),
+            'pasien' => Pasien::get(),
+            'penjamin' => Penjamin::get(),
+            'layanan' => Layanan::get(),
+            'unit' => Unit::get()
         ]);
     }
 
@@ -46,19 +49,35 @@ class KunjunganController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
 
         $formrequest = $request->merge([
-            'tgl_mulai'=> date('Y-m-d')
+            'tgl_mulai' => date('Y-m-d')
         ])->all();
-        $validate = Validator::make($formrequest, [
+        $validate_kunjungan = Validator::make($formrequest, [
             'pasien_id' => 'required|exists:ms_pasien,id',
             'layanan_id' => 'required|exists:ms_layanan,id',
             'penjamin_id' => 'required|exists:ms_penjamin,id',
             'tgl_mulai' => 'required|date',
         ])->validate();
 
-        Kunjungan::create($validate);
+        $kunjungan = Kunjungan::create($validate_kunjungan);
+
+        foreach ($request->addMore as $key => $value) {
+            // dd($value);
+            $formpelayanan = $request->merge([
+                'kunjungan_id' => $kunjungan->id,
+                'tgl_pelayanan' => date('Y-m-d'),
+                'unit_id' => $value['unit_id']
+            ])->all();
+
+            $validate_pelayanan = Validator::make($formpelayanan, [
+                'kunjungan_id' => 'required|exists:kunjungan,id',
+                'unit_id' => 'required|exists:ms_unit,id',
+                'tgl_pelayanan' => 'required|date',
+            ])->validate();
+
+            Pelayanan::create($validate_pelayanan);
+        }
 
         return redirect()
             ->route('kunjungan.index')
@@ -84,12 +103,14 @@ class KunjunganController extends Controller
      */
     public function edit(Kunjungan $kunjungan)
     {
-        // dd($kunjungan);
+        $pelayanan = Pelayanan::with('unit', 'kunjungan')->where('kunjungan_id','=',$kunjungan->id)->get();
+
         return view('pages.kunjungan.edit', [
             'pasien' => Pasien::get(),
             'layanan' => Layanan::get(),
             'penjamin' => Penjamin::get(),
             'kunjungan' => $kunjungan,
+            'pelayanan' => $pelayanan,
         ]);
     }
 

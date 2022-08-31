@@ -101,8 +101,11 @@ class Ms_TindakanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Ms_Tindakan $ms_tindakan)
     {
-        //
+        $ms_tindakan->delete();
+        return redirect()
+        ->route('ms_tindakan.index')
+        ->with('Success', 'Berhasil Menghapus Data Tindakan');
     }
 }
