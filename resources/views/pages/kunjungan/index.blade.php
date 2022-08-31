@@ -16,7 +16,7 @@
                 @endif
                     <div class="flex">
                         <a class="" href="{{ route('kunjungan.create') }}"><button
-                                class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">TAMBAH
+                                class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-black py-2 px-4 border border-blue-500 hover:border-transparent rounded">TAMBAH
                                 KUNJUNGAN</button>
                         </a>
                     </div>
@@ -55,7 +55,7 @@
                                     <tr class="bg-white ">
                                         <td class="py-4 px-6">{{ $key + 1 }}</td>
                                         <td class="py-4 px-6">{{ date('d-m-Y', strtotime($k->tgl_mulai)) }}</td>
-                                        <td class="py-4 px-6">{{ date('d-m-Y', strtotime($k->tgl_selesai)) }}</td>
+                                        <td class="py-4 px-6">{{ $k->tgl_selesai == null ? '-' : date('d-m-Y', strtotime($k->tgl_selesai)) }}</td>
                                         <td class="py-4 px-6">{{ $k->layanan->nama}}</td>
                                         <td class="py-4 px-6">{{ $k->penjamin->nama}}</td>
                                         <td class="py-4 px-6">{{ $k->pasien->id}}</td>

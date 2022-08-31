@@ -19,7 +19,7 @@ Route::middleware(['auth'])->group(function () {
     Route::name(('pasien.'))->group(function () {
         Route::get('/pasien', [\App\Http\Controllers\PasienController::class, 'index'])
             ->name('index');
-        Route::get('/pasien/{cari}', [\App\Http\Controllers\PasienController::class, 'cari'])
+        Route::get('/pasien/{pasien?}', [\App\Http\Controllers\PasienController::class, 'cari'])
             ->name('cari');
         Route::get('/pasien/create', [\App\Http\Controllers\PasienController::class, 'create'])
             ->name('create');

@@ -57,13 +57,19 @@ class PasienController extends Controller
 	{
 		// menangkap data pencarian
 		$cari = $request->cari;
+        if ($cari == null) {
+            return view('pages.pasien.index', [
+                'pasien' => Pasien::orderBy('id')->get(),
+
+            ]);
+        }
 
     		// mengambil data dari table pegawai sesuai pencarian data
 		$pasien = Pasien::where('nama','like',"%".$cari."%")
-		->paginate();
+		->get();
 
     		// mengirim data pegawai ke view index
-		return view('index',['pasien' => $pasien]);
+		return view('pages.pasien.index',['pasien' => $pasien]);
 
 	}
     /**
